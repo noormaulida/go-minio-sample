@@ -18,5 +18,17 @@ services:
       - "5432:5432"
     env_file:
       - ./.env
+  minio:
+    image: minio/minio
+    container_name: go-minio-data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio-storage:/data
+    env_file:
+      - ./.env
+    command: server --console-address ":9001" /data
 volumes:
   postgres-db:
+  minio-storage:
