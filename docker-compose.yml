@@ -1,0 +1,22 @@
+services:
+  app:
+    container_name: go-minio-app
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    command: air ./cmd/main.go -b 0.0.0.0
+  db:
+    image: postgres:15-bullseye
+    container_name: go-minio-postgres
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./.env
+volumes:
+  postgres-db:
